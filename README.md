@@ -1,3 +1,3 @@
 ![ACME Logo](/logo.png)
-# ACME-Python
+# ACME-Matlab
 A collection of utility functions and classes for Matlab
