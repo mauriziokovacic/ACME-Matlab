@@ -1,0 +1,9 @@
+function [M,T] = xtri(T,iter)
+i = 1; j = 2; k = 3;
+scheme = struct('E',[i i; i j; i k; ...
+                     j j; j k; j i;...
+                     k k; k i; k j; ...
+                     i j; j k; k i],'T',3);
+T = poly2tri(T);
+[M,T] = xmesh(T,scheme,iter);
+end

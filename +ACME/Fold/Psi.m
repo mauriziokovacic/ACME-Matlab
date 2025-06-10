@@ -1,0 +1,9 @@
+function [D] = Psi(Phi_i,Phi_j,rho)
+if(nargin<3)
+    rho = 2;
+end
+D = (Phi_i.* ...
+     Phi_j.* ...
+     (abs(Phi_i-Phi_j).^rho).* ...
+     (((rho+1)^(rho+1))/(rho^rho))).^(1/rho);
+end

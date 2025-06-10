@@ -1,0 +1,39 @@
+function [h,fig] = CreateAnimation3D(Skin,Anim,type,varargin)
+clear SkinningStep;
+if( nargin < 3 )
+    type = 'CPS';
+end
+if( ~strcmpi(type,'CPS') && ...
+    ~strcmpi(type,'LBS') && ...
+    ~strcmpi(type,'DIV') && ...
+    ~strcmpi(type,'DQS') && ...
+    ~strcmpi(type,'COR') && ...
+    ~strcmpi(type,'MAYA') )
+    type = 'CPS';
+end       
+
+fig = CreateViewer3D('headlight');
+fig.Name = type;
+display_mesh(Skin.M.P,Skin.M.N,Skin.M.S);
+
+frame = uicontrol( fig,...
+    'Style', 'slider',...
+    'Position', [100, 10, 200, 20],...
+    'Min', 1,...
+    'Max', numel(Anim),...
+    'SliderStep', [0.01 0.1],...
+    'Value', 1);
+addlistener( frame, 'ContinuousValueChange',...
+             @(src,event) EventHandler(fig,Skin,Anim,src.Value,type,varargin{:}) );
+ax = SkinningStep(fig,Skin,Anim{1},type,varargin{:});
+
+h = connect_axes(ax);
+
+end
+
+
+function EventHandler(fig,Skin,Anim,Frame,type,varargin)
+    Frame = round(Frame);
+    SkinningStep(fig,Skin,Anim{Frame},type,varargin{:});
+end
+
